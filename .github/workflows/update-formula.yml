@@ -1,0 +1,23 @@
+name: create PR to update formula
+
+on:
+  push:
+    branches:
+      - imgpkg-homebrew
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: vmware-tanzu/homebrew-carvel
+        ref: develop
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: "imgpkg-homebrew"
+        destination_branch: "develop"
+        pr_title: "Update imgpkg homebrew Formula: ${{ github.ref }}"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
